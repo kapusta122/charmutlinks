@@ -273,7 +273,7 @@
             border-radius: 12px;
             border: 3px solid #444;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             flex-shrink: 0;
             display: flex;
             align-items: center;
@@ -285,29 +285,32 @@
             left: 50%;
             transform: translateX(-50%);
             overflow: hidden;
+            will-change: transform, width, height, opacity, filter;
         }
         .album-cover img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .album-cover:hover {
-            transform: translateX(-50%) scale(1.05);
+        .album-cover:hover img {
+            transform: scale(1.05);
         }
         .album-cover.moved {
             width: 120px;
             height: 120px;
             transform: translateX(0);
             border-radius: 8px;
-            opacity: 0.7;
-            filter: brightness(0.8);
+            opacity: 0.9;
+            filter: brightness(0.9);
             position: relative;
             left: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         .album-cover.moved:hover {
-            transform: scale(1);
-            opacity: 0.8;
-            filter: brightness(0.9);
+            opacity: 1;
+            filter: brightness(1);
+            transform: scale(1.02);
         }
         .music-services {
             flex: 1;
@@ -316,10 +319,11 @@
             gap: 8px;
             transform: translateX(100%);
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             margin-left: 0;
             min-width: 0;
-            margin-bottom: 10px; /* Добавил отступ снизу */
+            margin-bottom: 10px;
+            will-change: transform, opacity;
         }
         .music-services.visible {
             transform: translateX(0);
@@ -329,7 +333,7 @@
             position: relative;
             opacity: 0;
             transform: translateY(-10px);
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             width: 100%;
         }
         .music-link-container.visible {
@@ -344,7 +348,7 @@
             text-decoration: none;
             font-weight: bold;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             border: 1px solid #444;
             display: flex;
             align-items: center;
@@ -366,7 +370,7 @@
             border-radius: 4px;
             z-index: 1;
             opacity: 0;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .music-link-container:hover .music-background {
             opacity: 1;
@@ -500,7 +504,7 @@
                 musicLinks.forEach((link, index) => {
                     setTimeout(() => {
                         link.classList.remove('visible');
-                    }, (totalLinks - 1 - index) * 50); // Обратный порядок - снизу вверх
+                    }, (totalLinks - 1 - index) * 50);
                 });
                 
                 // Скрываем контейнер сервисов
@@ -511,7 +515,7 @@
                 // Возвращаем обложку только после полного исчезновения сервисов
                 setTimeout(() => {
                     document.getElementById('albumCover').classList.remove('moved');
-                }, totalLinks * 50 + 100);
+                }, totalLinks * 50 + 150); // Увеличил задержку для плавности
                 
                 isAlbumExpanded = false;
             }
@@ -521,16 +525,20 @@
             if (!isAlbumExpanded) {
                 // Первое нажатие - двигаем обложку и показываем сервисы
                 this.classList.add('moved');
-                const musicServices = document.getElementById('musicServices');
-                musicServices.classList.add('visible');
                 
-                // Показываем сервисы последовательно сверху вниз
-                const musicLinks = musicServices.querySelectorAll('.music-link-container');
-                musicLinks.forEach((link, index) => {
-                    setTimeout(() => {
-                        link.classList.add('visible');
-                    }, index * 50);
-                });
+                // Небольшая задержка перед показом сервисов для плавности
+                setTimeout(() => {
+                    const musicServices = document.getElementById('musicServices');
+                    musicServices.classList.add('visible');
+                    
+                    // Показываем сервисы последовательно сверху вниз
+                    const musicLinks = musicServices.querySelectorAll('.music-link-container');
+                    musicLinks.forEach((link, index) => {
+                        setTimeout(() => {
+                            link.classList.add('visible');
+                        }, index * 80); // Увеличил задержку между появлениями
+                    });
+                }, 200); // Задержка перед показом сервисов
                 
                 isAlbumExpanded = true;
             } else {
@@ -543,7 +551,7 @@
                 musicLinks.forEach((link, index) => {
                     setTimeout(() => {
                         link.classList.remove('visible');
-                    }, (totalLinks - 1 - index) * 50); // Обратный порядок - снизу вверх
+                    }, (totalLinks - 1 - index) * 50);
                 });
                 
                 // Скрываем контейнер сервисов
@@ -554,7 +562,7 @@
                 // Возвращаем обложку только после полного исчезновения сервисов
                 setTimeout(() => {
                     this.classList.remove('moved');
-                }, totalLinks * 50 + 100);
+                }, totalLinks * 50 + 150); // Увеличил задержку для плавности
                 
                 isAlbumExpanded = false;
             }
