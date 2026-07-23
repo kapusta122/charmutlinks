@@ -26,11 +26,9 @@
             align-items: center;
             overflow-x: hidden;
         }
-        /* Убираем фоновую картинку */
         body::before {
             display: none;
         }
-        /* Затемнение фона при анимации карточки */
         .dark-overlay {
             position: fixed;
             top: 0;
@@ -135,7 +133,6 @@
             transform: scale(1.05);
             color: #c0c0c0;
         }
-        /* Дополнительная тень для глубины */
         .profile-img-container::after {
             content: '';
             position: absolute;
@@ -210,7 +207,6 @@
             font-size: 15px;
             overflow: hidden;
         }
-        /* Эффект блика для всех кнопок */
         .link::before {
             content: '';
             position: absolute;
@@ -245,7 +241,6 @@
             transform: translateY(-4px) scale(1.03);
             box-shadow: 0 10px 25px rgba(238, 119, 0, 0.15);
         }
-        /* Стили для секции альбома */
         .album-section {
             max-height: 0;
             overflow: hidden;
@@ -383,7 +378,10 @@
         <p class="bio">Musician | Filmmaker | Sound Producer | Editor</p>
         
         <div class="links">
-            <!-- Кнопка My Debut Single (самая верхняя) -->
+            <!-- Раздел MY MUSIC -->
+            <div class="section-title">MY MUSIC</div>
+            
+            <!-- Кнопка My Debut Single -->
             <div class="link-container">
                 <div class="link" id="musicButton">🎵 My Debut Single</div>
                 <div class="link-background"></div>
@@ -399,7 +397,7 @@
                 </div>
             </div>
             
-            <!-- Кнопка Buy My Beats (обновленная ссылка) -->
+            <!-- Кнопка Buy My Beats -->
             <div class="link-container">
                 <div class="link" id="buyBeatsButton" onclick="window.open('https://www.beatstars.com/mousthenpmkn','_blank')">🎹 BUY MY BEATS</div>
                 <div class="link-background"></div>
@@ -416,9 +414,13 @@
                 <a href="https://www.instagram.com/moustnpmkn17?igsh=eWIzdm01N2p0em4z&utm_source=qr" class="link">📷 Instagram</a>
                 <div class="link-background"></div>
             </div>
-            <!-- Кнопка Portfolio вместо Telegram, ссылка на Google Диск -->
+            
+            <!-- Раздел PORTFOLIO (просто заголовок) -->
+            <div class="section-title">PORTFOLIO</div>
+            
+            <!-- Кнопка Google Диск под разделом PORTFOLIO -->
             <div class="link-container">
-                <a href="https://drive.google.com/drive/folders/1zb7IInWqFwYHzXlS3gllpBJnWobpwfbh?usp=sharing" class="link">📁 Portfolio</a>
+                <a href="https://drive.google.com/drive/folders/1zb7IInWqFwYHzXlS3gllpBJnWobpwfbh?usp=sharing" class="link">📁 Google Диск</a>
                 <div class="link-background"></div>
             </div>
         </div>
@@ -430,20 +432,20 @@
     <script>
         let isAlbumExpanded = false;
         
+        // Логика для кнопки My Debut Single
         document.getElementById('musicButton').addEventListener('click', function() {
             const albumSection = document.getElementById('albumSection');
             
             if (!isAlbumExpanded) {
-                // Открываем секцию
                 albumSection.classList.add('active');
                 isAlbumExpanded = true;
             } else {
-                // Закрываем секцию с плавной анимацией
                 albumSection.classList.remove('active');
                 isAlbumExpanded = false;
             }
         });
         
+        // Логика для карточки профиля
         const profileCard = document.getElementById('profileCard');
         const darkOverlay = document.getElementById('darkOverlay');
         
